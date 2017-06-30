@@ -2,7 +2,7 @@
 不依赖于JQ的旋转木马
 ###  页面格式
 ```
-<div class="poster-main" id="carousel" data-setting='{
+<div class="poster-main" data-setting='{
           "width":1000,
           "height":300,
           "posterWidth":640,
@@ -36,9 +36,9 @@ data-setting='{
     "verticalAlign":"middle"
 }'
 ```
-###  初始化(id)
+###  初始化(选择器)
 ```
-Carousel.init("carousel");
+Carousel.init(".poster-main");
 ```
 ##  建议
 基数张图片展示效果更好
