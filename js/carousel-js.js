@@ -278,9 +278,11 @@
      * @param posters
      */
     Carousel.init = function(posters) {
-        let wrapId = document.getElementById(posters);
+        let wrapId = document.querySelectorAll(posters);
         let _carousel = this;
-        new _carousel(wrapId);
+        for(let i = 0 ; i < wrapId.length ; i++){
+            new _carousel(wrapId[i]);
+        }
     };
     window.Carousel = Carousel;
 })();

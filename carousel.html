@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="css/carousel.css">
 </head>
 <body style="padding: 50px">
-<div class="poster-main" id="carousel" data-setting='{
+<div class="poster-main" data-setting='{
 							"width":1000,
 							"height":300,
 							"posterWidth":640,
 							"posterHeight":270,
 							"scale":0.9,
-							"autoPlay":false,
+							"autoPlay":true,
 							"delay":2000,
 							"verticalAlign":"middle"
 							}'>
@@ -31,7 +31,7 @@
 <script>
     (function(){
         // Carousel
-        Carousel.init("carousel");
+        Carousel.init(".poster-main");
     })()
 </script>
 </html>
