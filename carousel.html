@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播</title>
+    <link rel="stylesheet" href="css/carousel.css">
+</head>
+<body style="padding: 50px">
+<div class="poster-main" id="carousel" data-setting='{
+							"width":1000,
+							"height":300,
+							"posterWidth":640,
+							"posterHeight":270,
+							"scale":0.9,
+							"autoPlay":false,
+							"delay":2000,
+							"verticalAlign":"middle"
+							}'>
+    <div class="poster-btn poster-prev-btn"></div>
+    <ul class="poster-list">
+        <li class="poster-item"><a href="#"><img src="img/10.png" alt="" width="100%" /></a></li>
+        <li class="poster-item"><a href="#"><img src="img/17.png" alt="" width="100%" /></a></li>
+        <li class="poster-item"><a href="#"><img src="img/12.png" alt="" width="100%" /></a></li>
+        <li class="poster-item"><a href="#"><img src="img/14.png" alt="" width="100%" /></a></li>
+        <li class="poster-item"><a href="#"><img src="img/20.png" alt="" width="100%" /></a></li>
+    </ul>
+    <div class="poster-btn poster-next-btn"></div>
+</div>
+</body>
+<script type="text/javascript" src="js/carousel-js.js"></script>
+<script>
+    (function(){
+        // Carousel
+        Carousel.init("carousel");
+    })()
+</script>
+</html>
