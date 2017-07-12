@@ -185,21 +185,12 @@
                     ft = firstItem.style.top,
                     fz = firstItem.style.zIndex;
                 for(let i = 0 ; i < l ; i++){
-                    if (i === l-1){
-                        _carousel.posterItems[i].style.width = fw;
-                        _carousel.posterItems[i].style.height = fh;
-                        _carousel.posterItems[i].style.opacity = fo;
-                        _carousel.posterItems[i].style.left = fl;
-                        _carousel.posterItems[i].style.top = ft;
-                        _carousel.posterItems[i].style.zIndex = fz;
-                    }else{
-                        _carousel.posterItems[i].style.width = _carousel.posterItems[i+1].style.width;
-                        _carousel.posterItems[i].style.height = _carousel.posterItems[i+1].style.height;
-                        _carousel.posterItems[i].style.opacity = _carousel.posterItems[i+1].style.opacity;
-                        _carousel.posterItems[i].style.left = _carousel.posterItems[i+1].style.left;
-                        _carousel.posterItems[i].style.top = _carousel.posterItems[i+1].style.top;
-                        _carousel.posterItems[i].style.zIndex = _carousel.posterItems[i+1].style.zIndex;
-                    }
+                    _carousel.posterItems[i].style.width = i === l-1 ? fw : _carousel.posterItems[i+1].style.width;
+                    _carousel.posterItems[i].style.height = i === l-1 ? fh : _carousel.posterItems[i+1].style.height;
+                    _carousel.posterItems[i].style.opacity = i === l-1 ? fo : _carousel.posterItems[i+1].style.opacity;
+                    _carousel.posterItems[i].style.left = i === l-1 ? fl : _carousel.posterItems[i+1].style.left;
+                    _carousel.posterItems[i].style.top = i === l-1 ? ft : _carousel.posterItems[i+1].style.top;
+                    _carousel.posterItems[i].style.zIndex = i === l-1 ? fz : _carousel.posterItems[i+1].style.zIndex;
                 }
             }else if (type === "right"){
                 let l = _carousel.posterItems.length;
@@ -211,21 +202,12 @@
                     ft = lastItem.style.top,
                     fz = lastItem.style.zIndex;
                 for(let i = l-1 ; i > -1 ; i--){
-                    if (i === 0){
-                        _carousel.posterItems[i].style.width = fw;
-                        _carousel.posterItems[i].style.height = fh;
-                        _carousel.posterItems[i].style.opacity = fo;
-                        _carousel.posterItems[i].style.left = fl;
-                        _carousel.posterItems[i].style.top = ft;
-                        _carousel.posterItems[i].style.zIndex = fz;
-                    }else{
-                        _carousel.posterItems[i].style.width = _carousel.posterItems[i-1].style.width;
-                        _carousel.posterItems[i].style.height = _carousel.posterItems[i-1].style.height;
-                        _carousel.posterItems[i].style.opacity = _carousel.posterItems[i-1].style.opacity;
-                        _carousel.posterItems[i].style.left = _carousel.posterItems[i-1].style.left;
-                        _carousel.posterItems[i].style.top = _carousel.posterItems[i-1].style.top;
-                        _carousel.posterItems[i].style.zIndex = _carousel.posterItems[i-1].style.zIndex;
-                    }
+                    _carousel.posterItems[i].style.width = i === 0 ? fw : _carousel.posterItems[i-1].style.width;
+                    _carousel.posterItems[i].style.height = i === 0 ? fh : _carousel.posterItems[i-1].style.height;
+                    _carousel.posterItems[i].style.opacity = i === 0 ? fo : _carousel.posterItems[i-1].style.opacity;
+                    _carousel.posterItems[i].style.left = i === 0 ? fl : _carousel.posterItems[i-1].style.left;
+                    _carousel.posterItems[i].style.top = i === 0 ? ft : _carousel.posterItems[i-1].style.top;
+                    _carousel.posterItems[i].style.zIndex = i === 0 ? fz : _carousel.posterItems[i-1].style.zIndex;
                 }
             }
         },
@@ -271,6 +253,54 @@
                     }
                 }
             }
+        },
+        animate:function (obj, json, interval, sp, fn) {
+            clearInterval(obj.timer);
+            //var k = 0;
+            //var j = 0;
+            function getStyle(obj, arr) {
+                if(obj.currentStyle){
+                    return obj.currentStyle[arr];    //针对ie
+                } else {
+                    return document.defaultView.getComputedStyle(obj, null)[arr];
+                }
+            }
+            obj.timer = setInterval(function(){
+                //j ++;
+                var flag = true;
+                for(var arr in json) {
+                    var icur = 0;
+                    //k++;
+                    if(arr == "opacity") {
+                        icur = Math.round(parseFloat(getStyle(obj, arr))*100);
+                    } else {
+                        icur = parseInt(getStyle(obj, arr));
+                    }
+                    var speed = (json[arr] - icur) * sp;
+                    speed = speed > 0 ? Math.ceil(speed): Math.floor(speed);
+                    if(icur != json[arr]){
+                        flag = false;
+                    }
+                    if(arr == "opacity"){
+                        obj.style.filter = "alpha(opacity : '+(icur + speed)+' )";
+                        obj.style.opacity = (icur + speed)/100;
+                    }else {
+                        obj.style[arr] = icur + speed + "px";
+                    }
+                    //console.log(j + "," + arr +":"+ flag);
+                }
+
+                if(flag){
+                    clearInterval(obj.timer);
+                    //console.log(j + ":" + flag);
+                    //console.log("k = " + k);
+                    //console.log("j = " + j);
+                    //console.log("DONE");
+                    if(fn){
+                        fn();
+                    }
+                }
+            },interval);
         }
     };
     /**
